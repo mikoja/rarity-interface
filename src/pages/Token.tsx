@@ -5,7 +5,7 @@ import { Attribute, Token as TokenInterface } from '../types'
 import './Token.css'
 import { formatNumber, formatURL } from '../utils'
 import { TraitContext } from '../components/TraitContext'
-import { useCallback, useContext } from 'react'
+import { useCallback, useContext, useEffect } from 'react'
 import useMeta from '../hooks/useMeta'
 import { RarityModeContext } from '../components/RarityModeContext'
 import config from '../rarityConfig'
@@ -102,24 +102,25 @@ const Attributes: React.FC<AttributesProps> = ({ attributes }) => {
   const { max } = useMeta()
 
   const percentage = useCallback(
-    (attribute: Attribute) => {
+    (attribute: Attribute, normalized: boolean) => {
       const highest = max(attribute.trait_type)
-      return highest ? Math.round((attribute.rarity_score / highest) * 100) : 0
+      const score = normalized ? attribute.rarity_score_normalized : attribute.rarity_score
+      return highest ? Math.round((score / highest) * 100) : 0
     },
     [max]
   )
 
-  const springs = useSprings(
+  const { normalized } = useContext(RarityModeContext)
+
+  const [springs, api] = useSprings(
     attributes?.length ?? 0,
-    attributes
-      ? attributes.map((attribute) => ({
-        from: { width: '0%' },
-        to: { width: `${percentage(attribute)}%` },
-      }))
-      : []
+    (index) => ({ width: '0%' })
   )
 
-  const { normalized } = useContext(RarityModeContext)
+  useEffect(() => {
+    if (!attributes) return
+    api.start(i => ({ width: `${percentage(attributes[i], normalized)}%` }))
+  }, [normalized, percentage, attributes, api])
 
   if (!attributes || !max) return null
   return (
