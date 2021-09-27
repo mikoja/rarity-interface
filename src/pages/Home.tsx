@@ -40,6 +40,12 @@ function Home() {
 
   const { queryParams: traitQueryParams, tokenCount } = useContext(TraitContext)
 
+  useEffect(() => {
+    if (!tokenCount) return
+    const numPages = Math.ceil(tokenCount / tokensPerPage)
+    setPage(page => Math.min(numPages - 1, page))
+  }, [tokenCount])
+
   const { normalized } = useContext(RarityModeContext)
 
   const { data: tokenData } = useQuery<{ tokens: Token[] }>(GET_TOKENS, {
