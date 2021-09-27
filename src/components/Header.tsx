@@ -8,17 +8,17 @@ const Header: React.FC = () => {
     <header className="flex items-center w-full shadow-2xl justify-between">
       <div className="h-full flex items-center">
         <Link to="/">
-          <h1 className="text-2xl ml-5" style={{ ...config.headerTextStyle }}>
+          <h1 className="text-lg sm:text-xl ml-2 sm:ml-5" style={{ ...config.headerTextStyle }}>
             {config.headerText}
           </h1>
         </Link>
 
         {config.logoURL ? (
-          <Link to="/" className="h-full">
+          <Link to="/" className="h-full flex-shrink-0">
             <img
               src={config.logoURL}
               alt="logo"
-              className="ml-5 h-full"
+              className="ml-2 sm:ml-5 h-full"
               style={{
                 ...config.logoStyle,
               }}
@@ -39,7 +39,7 @@ export default Header
 const ProjectLinks: React.FC = () => {
   if (!config.links) return null
   return (
-    <div className="flex items-center gap-3 text-sm mr-6 text-gray-700">
+    <div className="flex items-center gap-2 sm:gap-3 text-sm mr-2 sm:mr-6 text-gray-700">
       {config.links.website ? <a href={config.links.website}>Website</a> : null}
       {config.links.twitter ? (
         <a href={config.links.twitter}>
