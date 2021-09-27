@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 
 const Header: React.FC = () => {
   return (
-    <header className="flex items-center w-full shadow-2xl justify-between">
+    <header className="flex items-center w-full shadow-2xl justify-between overflow-hidden">
       <div className="h-full flex items-center">
         <Link to="/">
           <h1 className="text-lg sm:text-xl ml-2 sm:ml-5" style={{ ...config.headerTextStyle }}>
