@@ -71,21 +71,19 @@ function Home() {
   }, [metadata, search, tokenCount])
 
   return (
-    <div className="h-full">
-      <main className="flex flex-col h-full items-center mx-4 md:mx-6 lg:mx-8 xl:mx-10">
-        <div className="w-full flex justify-end">
-          <Search search={search} setSearch={setSearch} />
-        </div>
-        <TokenList
-          tokens={tokenData?.tokens}
-          meta={metadata?.meta}
-          orders={orders}
-          page={page}
-          setPage={setPage}
-          pageCount={pageCount}
-        />
-      </main>
-    </div>
+    <main className="content flex flex-col items-center mx-4 md:mx-6 lg:mx-8 xl:mx-10">
+      <div className="w-full flex justify-end">
+        <Search search={search} setSearch={setSearch} />
+      </div>
+      <TokenList
+        tokens={tokenData?.tokens}
+        meta={metadata?.meta}
+        orders={orders}
+        page={page}
+        setPage={setPage}
+        pageCount={pageCount}
+      />
+    </main>
   )
 }
 
@@ -172,15 +170,15 @@ const Pagination: React.FC<PaginationProps> = ({
       nextLabel={<ChevronDoubleRightIcon className="h-6 w-6 text-gray-500" />}
       onPageChange={(page) => setPage(page.selected)}
       breakClassName=""
-      breakLinkClassName=""
+      breakLinkClassName="hover:cursor-pointer"
       containerClassName={`${className}`}
       pageClassName=""
-      pageLinkClassName=""
+      pageLinkClassName="hover:cursor-pointer"
       activeClassName="text-black font-normal"
       previousClassName=""
       nextClassName=""
-      previousLinkClassName=""
-      nextLinkClassName=""
+      previousLinkClassName="hover:cursor-pointer"
+      nextLinkClassName="hover:cursor-pointer"
       disabledClassName=""
     />
   )
@@ -193,7 +191,16 @@ interface CardProps {
 
 const Card: React.FC<CardProps> = ({ token, order }) => {
   const history = useHistory()
-  const { name, id, image, image_data, background_color } = token
+  const { normalized } = useContext(RarityModeContext)
+  const {
+    name,
+    rank,
+    rank_normalized,
+    id,
+    image,
+    image_data,
+    background_color,
+  } = token
   const src = config.listImageKey
     ? token[config.listImageKey]
     : image_data ?? formatURL(image ?? '')
@@ -215,13 +222,13 @@ const Card: React.FC<CardProps> = ({ token, order }) => {
               className="rounded w-full"
               src={src}
               alt={name ?? 'Token #' + id}
-              style={{ minWidth: 200, minHeight: 200 }}
+              style={{ width: '100%', height: 'auto' }}
             />
           </a>
         </button>
       </div>
-      <div className="text-xl lg:text-lg flex font-gray-700 whitespace-nowrap flex-wrap justify-between tracking-tight">
-        {name}
+      <div className="m-1 text-xl lg:text-lg flex font-gray-700 whitespace-nowrap flex-wrap justify-between tracking-tight">
+        {normalized ? rank_normalized : rank}. {name}
         <Order order={order} />
       </div>
     </div>

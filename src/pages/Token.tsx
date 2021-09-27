@@ -52,7 +52,9 @@ const Token: React.FC = () => {
           >
             <h1 className="text-4xl font-extralight m-4">{token.name}</h1>
             <Image token={token} />
-            <p className="font-gray-700">{token.description}</p>
+            <p className="m-1 text-gray-800">
+              {token.description}
+            </p>
           </div>
         </div>
 
@@ -209,7 +211,7 @@ const Image: React.FC<ImageProps> = ({ token }) => {
           '#' + token.background_color ??
           'transparent',
       }}
-      className=""
+      className="rounded"
       src={formatURL(src ?? '')}
       alt={token.name ?? 'Token #' + token.id}
     />
