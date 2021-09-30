@@ -80,9 +80,9 @@ function Home() {
     <main className="content flex flex-col items-center mx-4 md:mx-6 lg:mx-8 xl:mx-10">
       <div className={`grid w-full justify-center mt-4`}>
         <p className="col-start-1 row-start-1 text-sm rounded border border-red-500 bg-opacity-70 bg-red-100 p-3 max-w-lg text-gray-700">
-          The rarity data is incomplete (3122 / 10000).
+          The rarity data is incomplete (3281 / 10000).
           <p>Scores and rankings will change as more scapes are minted.</p>
-          <p>Updated {new Date(1632944257425).toUTCString()}.</p>
+          <p>Updated {new Date(1633026121719).toUTCString()}.</p>
         </p>
       </div>
       <div className="w-full flex justify-end">
